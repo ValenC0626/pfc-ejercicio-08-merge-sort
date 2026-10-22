@@ -31,19 +31,40 @@ class Ejercicio {
   }
 }
 
-  // Punto 2. Tuplas en reconocimiento de patrones: dos listas a la vez.
+   // Punto 2. Tuplas en reconocimiento de patrones: dos listas a la vez.
 
   // Compara las dos listas como se ordenan las palabras en un diccionario:
   // -1 si l1 va antes, 1 si va después, 0 si son iguales. La que se acaba
   // primero va antes.
   def comparar(l1: List[Int], l2: List[Int]): Int = {
-    0 // Completar
+    (l1, l2) match {
+      case (Nil, Nil) => 0
+      case (Nil, _) => -1
+      case (_, Nil) => 1
+      case (h1 :: t1, h2 :: t2) =>
+        if (h1 < h2) {
+          -1
+        } else if (h1 > h2) {
+          1
+        } else {
+          comparar(t1, t2)
+        }
+    }
   }
 
   // El tramo inicial que las dos listas tienen igual, hasta la primera
   // diferencia.
   def prefijoComun(l1: List[Int], l2: List[Int]): List[Int] = {
-    List() // Completar
+    (l1, l2) match {
+      case (Nil, _) => Nil
+      case (_, Nil) => Nil
+      case (h1 :: t1, h2 :: t2) =>
+        if (h1 == h2) {
+          h1 :: prefijoComun(t1, t2)
+        } else {
+          Nil
+        }
+    }
   }
 
   // Punto 3. Ordenamiento por mezcla, primero sobre enteros y luego
