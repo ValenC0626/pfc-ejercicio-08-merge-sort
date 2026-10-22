@@ -151,27 +151,50 @@ class Ejercicio {
     mergeSortGen(l)(menor)
   }
 
-  // Punto 4. Funciones de alto orden sobre listas, escritas a mano.
+   // Punto 4. Funciones de alto orden sobre listas, escritas a mano.
 
   // La lista con f aplicada a cada elemento, en el mismo orden.
   def mapear[A, B](l: List[A])(f: A => B): List[B] = {
-    List() // Completar
+    l match {
+      case Nil => Nil
+      case h :: t =>
+        f(h) :: mapear(t)(f)
+    }
   }
 
   // Los elementos que cumplen p, en el mismo orden.
   def filtrar[A](l: List[A])(p: A => Boolean): List[A] = {
-    List() // Completar
+    l match {
+      case Nil => Nil
+      case h :: t =>
+        if (p(h)) {
+          h :: filtrar(t)(p)
+        } else {
+          filtrar(t)(p)
+        }
+    }
   }
 
   // Combina los elementos de izquierda a derecha partiendo de z:
   // op(op(op(z, x1), x2), x3) para List(x1, x2, x3).
-  def plegarIzq[A, B](l: List[A])(z: B)(op: (B, A) => B): B = {
-    z // Completar
+  def plegarIzq[A, B](
+      l: List[A]
+  )(z: B)(op: (B, A) => B): B = {
+    l match {
+      case Nil => z
+      case h :: t =>
+        plegarIzq(t)(op(z, h))(op)
+    }
   }
 
   // Ordena los elementos según la clave que se calcula de cada uno;
   // menor compara claves. Devuelve los elementos, no las claves.
-  def ordenarPor[T, K](l: List[T])(clave: T => K)(menor: (K, K) => Boolean): List[T] = {
-    List() // Completar
+  def ordenarPor[T, K](
+      l: List[T]
+  )(clave: T => K)(menor: (K, K) => Boolean): List[T] = {
+
+    mergeSortGen(l) { (a, b) =>
+      menor(clave(a), clave(b))
+    }
   }
 }
