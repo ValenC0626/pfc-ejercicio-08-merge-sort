@@ -21,8 +21,15 @@ class Ejercicio {
   // De una lista de pares saca dos listas: la de los primeros y la de los
   // segundos, en el mismo orden.
   def desemparejar(l: List[(Int, Int)]): (List[Int], List[Int]) = {
-    (List(), List()) // Completar
+  l match {
+    case Nil =>
+      (List(), List())
+
+    case (a, b) :: resto =>
+      val resultado = desemparejar(resto)
+      (a :: resultado._1, b :: resultado._2)
   }
+}
 
   // Punto 2. Tuplas en reconocimiento de patrones: dos listas a la vez.
 
