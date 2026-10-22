@@ -2,7 +2,10 @@ package taller
 
 class Ejercicio {
 
-  // Punto 1. Tuplas: armarlas y desarmarlas.
+  // Tal como está, todo devuelve la lista vacía, la tupla de listas vacías
+  // o cero, y las pruebas quedan en rojo.
+
+ // Punto 1. Tuplas: armarlas y desarmarlas.
 
   // Forma un par con los elementos que ocupan la misma posición en las dos
   // listas; los que sobran de la más larga se descartan.
@@ -18,12 +21,7 @@ class Ejercicio {
   // De una lista de pares saca dos listas: la de los primeros y la de los
   // segundos, en el mismo orden.
   def desemparejar(l: List[(Int, Int)]): (List[Int], List[Int]) = {
-    l match {
-      case Nil => (Nil, Nil)
-      case (a, b) :: resto =>
-        val (primeros, segundos) = desemparejar(resto)
-        (a :: primeros, b :: segundos)
-    }
+    (List(), List()) // Completar
   }
 
   // Punto 2. Tuplas en reconocimiento de patrones: dos listas a la vez.
@@ -32,34 +30,13 @@ class Ejercicio {
   // -1 si l1 va antes, 1 si va después, 0 si son iguales. La que se acaba
   // primero va antes.
   def comparar(l1: List[Int], l2: List[Int]): Int = {
-    (l1, l2) match {
-      case (Nil, Nil) => 0
-      case (Nil, _) => -1
-      case (_, Nil) => 1
-      case (h1 :: t1, h2 :: t2) =>
-        if (h1 < h2) {
-          -1
-        } else if (h1 > h2) {
-          1
-        } else {
-          comparar(t1, t2)
-        }
-    }
+    0 // Completar
   }
 
   // El tramo inicial que las dos listas tienen igual, hasta la primera
   // diferencia.
   def prefijoComun(l1: List[Int], l2: List[Int]): List[Int] = {
-    (l1, l2) match {
-      case (Nil, _) => Nil
-      case (_, Nil) => Nil
-      case (h1 :: t1, h2 :: t2) =>
-        if (h1 == h2) {
-          h1 :: prefijoComun(t1, t2)
-        } else {
-          Nil
-        }
-    }
+    List() // Completar
   }
 
   // Punto 3. Ordenamiento por mezcla, primero sobre enteros y luego
@@ -68,128 +45,56 @@ class Ejercicio {
   // Parte la lista en dos mitades. Con un número impar de elementos, la
   // primera se queda con el elemento de más.
   def partir[T](l: List[T]): (List[T], List[T]) = {
-    val mitad = (l.length + 1) / 2
-    l.splitAt(mitad)
+    (List(), List()) // Completar
   }
 
   // Mezcla dos listas de enteros ya ordenadas en una sola ordenada.
   def mezclar(l1: List[Int], l2: List[Int]): List[Int] = {
-    (l1, l2) match {
-      case (Nil, _) => l2
-      case (_, Nil) => l1
-      case (h1 :: t1, h2 :: t2) =>
-        if (h1 <= h2) {
-          h1 :: mezclar(t1, l2)
-        } else {
-          h2 :: mezclar(l1, t2)
-        }
-    }
+    List() // Completar
   }
 
   // Ordena de menor a mayor partiendo, ordenando cada mitad y mezclando.
   def mergeSort(l: List[Int]): List[Int] = {
-    l match {
-      case Nil => Nil
-      case _ :: Nil => l
-      case _ =>
-        val (izquierda, derecha) = partir(l)
-
-        mezclar(
-          mergeSort(izquierda),
-          mergeSort(derecha)
-        )
-    }
+    List() // Completar
   }
 
   // Mezcla dos listas ya ordenadas según menor, para cualquier tipo.
   // menor(a, b) responde si a debe ir antes que b.
-  def mezclarCon[T](
-      l1: List[T],
-      l2: List[T]
-  )(menor: (T, T) => Boolean): List[T] = {
-
-    (l1, l2) match {
-      case (Nil, _) => l2
-      case (_, Nil) => l1
-      case (h1 :: t1, h2 :: t2) =>
-        if (menor(h1, h2)) {
-          h1 :: mezclarCon(t1, l2)(menor)
-        } else {
-          h2 :: mezclarCon(l1, t2)(menor)
-        }
-    }
+  def mezclarCon[T](l1: List[T], l2: List[T])(menor: (T, T) => Boolean): List[T] = {
+    List() // Completar
   }
 
   // Ordena una lista de cualquier tipo con el criterio que se le entregue.
-  def mergeSortGen[T](
-      l: List[T]
-  )(menor: (T, T) => Boolean): List[T] = {
-
-    l match {
-      case Nil => Nil
-      case _ :: Nil => l
-      case _ =>
-        val (izquierda, derecha) = partir(l)
-
-        mezclarCon(
-          mergeSortGen(izquierda)(menor),
-          mergeSortGen(derecha)(menor)
-        )(menor)
-    }
+  def mergeSortGen[T](l: List[T])(menor: (T, T) => Boolean): List[T] = {
+    List() // Completar
   }
 
   // Ordena enteros con el criterio que se le entregue.
-  def mergeSortCon(
-      l: List[Int],
-      menor: (Int, Int) => Boolean
-  ): List[Int] = {
-    mergeSortGen(l)(menor)
+  def mergeSortCon(l: List[Int], menor: (Int, Int) => Boolean): List[Int] = {
+    List() // Completar
   }
 
   // Punto 4. Funciones de alto orden sobre listas, escritas a mano.
 
   // La lista con f aplicada a cada elemento, en el mismo orden.
   def mapear[A, B](l: List[A])(f: A => B): List[B] = {
-    l match {
-      case Nil => Nil
-      case h :: t =>
-        f(h) :: mapear(t)(f)
-    }
+    List() // Completar
   }
 
   // Los elementos que cumplen p, en el mismo orden.
   def filtrar[A](l: List[A])(p: A => Boolean): List[A] = {
-    l match {
-      case Nil => Nil
-      case h :: t =>
-        if (p(h)) {
-          h :: filtrar(t)(p)
-        } else {
-          filtrar(t)(p)
-        }
-    }
+    List() // Completar
   }
 
   // Combina los elementos de izquierda a derecha partiendo de z:
   // op(op(op(z, x1), x2), x3) para List(x1, x2, x3).
-  def plegarIzq[A, B](
-      l: List[A]
-  )(z: B)(op: (B, A) => B): B = {
-    l match {
-      case Nil => z
-      case h :: t =>
-        plegarIzq(t)(op(z, h))(op)
-    }
+  def plegarIzq[A, B](l: List[A])(z: B)(op: (B, A) => B): B = {
+    z // Completar
   }
 
   // Ordena los elementos según la clave que se calcula de cada uno;
   // menor compara claves. Devuelve los elementos, no las claves.
-  def ordenarPor[T, K](
-      l: List[T]
-  )(clave: T => K)(menor: (K, K) => Boolean): List[T] = {
-
-    mergeSortGen(l) { (a, b) =>
-      menor(clave(a), clave(b))
-    }
+  def ordenarPor[T, K](l: List[T])(clave: T => K)(menor: (K, K) => Boolean): List[T] = {
+    List() // Completar
   }
 }
