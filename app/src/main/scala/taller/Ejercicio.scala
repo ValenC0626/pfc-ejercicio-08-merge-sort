@@ -73,33 +73,82 @@ class Ejercicio {
   // Parte la lista en dos mitades. Con un número impar de elementos, la
   // primera se queda con el elemento de más.
   def partir[T](l: List[T]): (List[T], List[T]) = {
-    (List(), List()) // Completar
+    val mitad = (l.length + 1) / 2
+    l.splitAt(mitad)
   }
 
   // Mezcla dos listas de enteros ya ordenadas en una sola ordenada.
   def mezclar(l1: List[Int], l2: List[Int]): List[Int] = {
-    List() // Completar
+    (l1, l2) match {
+      case (Nil, _) => l2
+      case (_, Nil) => l1
+      case (h1 :: t1, h2 :: t2) =>
+        if (h1 <= h2) {
+          h1 :: mezclar(t1, l2)
+        } else {
+          h2 :: mezclar(l1, t2)
+        }
+    }
   }
 
   // Ordena de menor a mayor partiendo, ordenando cada mitad y mezclando.
   def mergeSort(l: List[Int]): List[Int] = {
-    List() // Completar
+    l match {
+      case Nil => Nil
+      case _ :: Nil => l
+      case _ =>
+        val (izquierda, derecha) = partir(l)
+
+        mezclar(
+          mergeSort(izquierda),
+          mergeSort(derecha)
+        )
+    }
   }
 
   // Mezcla dos listas ya ordenadas según menor, para cualquier tipo.
   // menor(a, b) responde si a debe ir antes que b.
-  def mezclarCon[T](l1: List[T], l2: List[T])(menor: (T, T) => Boolean): List[T] = {
-    List() // Completar
+  def mezclarCon[T](
+      l1: List[T],
+      l2: List[T]
+  )(menor: (T, T) => Boolean): List[T] = {
+
+    (l1, l2) match {
+      case (Nil, _) => l2
+      case (_, Nil) => l1
+      case (h1 :: t1, h2 :: t2) =>
+        if (menor(h1, h2)) {
+          h1 :: mezclarCon(t1, l2)(menor)
+        } else {
+          h2 :: mezclarCon(l1, t2)(menor)
+        }
+    }
   }
 
   // Ordena una lista de cualquier tipo con el criterio que se le entregue.
-  def mergeSortGen[T](l: List[T])(menor: (T, T) => Boolean): List[T] = {
-    List() // Completar
+  def mergeSortGen[T](
+      l: List[T]
+  )(menor: (T, T) => Boolean): List[T] = {
+
+    l match {
+      case Nil => Nil
+      case _ :: Nil => l
+      case _ =>
+        val (izquierda, derecha) = partir(l)
+
+        mezclarCon(
+          mergeSortGen(izquierda)(menor),
+          mergeSortGen(derecha)(menor)
+        )(menor)
+    }
   }
 
   // Ordena enteros con el criterio que se le entregue.
-  def mergeSortCon(l: List[Int], menor: (Int, Int) => Boolean): List[Int] = {
-    List() // Completar
+  def mergeSortCon(
+      l: List[Int],
+      menor: (Int, Int) => Boolean
+  ): List[Int] = {
+    mergeSortGen(l)(menor)
   }
 
   // Punto 4. Funciones de alto orden sobre listas, escritas a mano.
